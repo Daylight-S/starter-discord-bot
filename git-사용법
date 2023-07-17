@@ -1,0 +1,40 @@
+특정한 브랜치를 클론하는 법
+이제 우리의 데모용 리포지토리에서 특정한 브랜치를 클론해보자. 특정한 브랜치를 클론하는 방법에는 두가지가 있다:
+
+리포지토리를 클론한 다음 모든 브랜치들을 가져온다(fetch). 그리고나서 특정한 브랜치로 전환(checkout)한다.
+리포지토리를 클론한 후에 그 특정한 브랜치만 페치한다.
+첫번째 방법
+git clone --branch <branchname> <remote-repo-url>
+또는
+
+git clone -b <branchname> <remote-repo-url>
+여기에서 -b는 --branch의 줄임말이다.
+
+이 명령어로 리포지토리에 있는 모든 브랜치들을 페치한 후에 특정한 브랜치로 전환한다. 그러면 그 브랜치를 기준으로 로컬에서 git push 와 git pull를 할 수 있도록 설정이 된다. 하지만 이렇게 하면 각 브랜치가 갖고 있는 모든 파일들을 다 페치한 상태이다. 그렇게까지 할 필요는 없을 수도 있다(혹은 원하지 않은 결과일 수도 있다).
+
+테스트를 해보자:
+
+ git clone -b passwordless-auth git@github.com:BolajiAyodeji/nextjs-blog.git
+이렇게 하게 되면 자동으로 passwordless-auth 브랜치가 로컬 브랜치로 설정 되는 동시에 다른 브랜치들도 추적할 수 있다.
+
+
+두번째 방법
+git clone --branch <branchname> --single-branch <remote-repo-url>
+또는
+
+git clone -b <branchname> --single-branch <remote-repo-url>
+여기에서 -b는 --branch의 줄임말이다.
+
+이 명령어는 첫번째 방법과 같은 동작을 수행한다. 차이점은 --single-branch 옵션이 붙었다는 것인데 이 옵션은 Git 버전 1.7.10 에서 소개되었고 그 이후 버전들에서도 가능하다.
+이 옵션을 붙이게 되면 특정한 브랜치의 파일들만 페치하고 다른 브랜치들에서는 페치를 하지 않는다.
+
+테스트를 해보자:
+
+git clone -b passwordless-auth --single-branch git@github.com:BolajiAyodeji/nextjs-blog.git
+이렇게 하게 되면 자동으로 passwordless-auth 브랜치를 로컬 브랜치로 설정하고 이 브랜치만 추적하게 된다.
+
+두번째 방법에서 git remote show origin 명령어. 추적하는 모든 브랜치들을 보여주는 터미널 화면
+
+두번째 방법에서 git branch -a 명령어가 출력하는 터미널 화면
+
+터미널에서 cd pages/api 를 실행해보면 처음의 프로젝트 설정에서와 같이 passwordless-auth 브랜치에 있는 auth.js 파일이 있는 것을 확인할 수 있다.
